@@ -1,31 +1,19 @@
-import "./App.css";
-
-import { useFetch } from "./useFetch";
+import { useToggle } from "./useToggle";
 
 export function Demo() {
-  const { data, isLoading, error, refetch } = useFetch(
-    "https://jsonplaceholder.typicode.com/posts"
-  );
+  const [value, toggle] = useToggle(["blue", "orange", "cyan", "teal"]);
+  // const [value, toggle] = useToggle(["light", "dark"]);
 
-  return (
-    <div>
-      <div>
-        <button
-          onClick={() =>
-            refetch({
-              params: {
-                _limit: 3,
-              },
-            })
-          }>
-          Перезапросить
-        </button>
-      </div>
-      {isLoading && "Загрузка..."}
-      {error && "Произошла ошибка"}
-      {data &&
-        !isLoading &&
-        data.map((item) => <div key={item.id}>{item.title}</div>)}
-    </div>
-  );
+  return <button onClick={() => toggle()}>{value}</button>;
 }
+
+// Еще примеры использования
+
+// const [value, toggle] = useToggle(['light', 'dark']);
+
+// toggle(); // -> value === 'light'
+// toggle(); // -> value === 'dark'
+
+// // Так же можно передать конкретное значение и тогда
+// // value станет одним из значений
+// toggle('dark'); // -> value === 'dark'
