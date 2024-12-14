@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { useWindowEvent } from "./useWindowEvent";
 
-export function useViewportSize(initialUrl) {
+export function useViewportSize() {
   const [viewportSize, setViewportSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
