@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES5",                             // Целевая версия JavaScript
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],    // Подключаемые библиотеки
+    "allowJs": true,                             // Разрешить работу с JavaScript файлами
+    "skipLibCheck": true,                        // Пропуск проверки типов в файлах библиотеки
+    "strict": true,                              // Включение строгого режима
+    "forceConsistentCasingInFileNames": true,    // Учет регистра в названиях файлов
+    "noEmit": true,                              // Не генерировать выходные файлы
+    "esModuleInterop": true,                     // Совместимость с модулями ES
+    "module": "ESNext",                          // Модульная система
+    "moduleResolution": "Node",                 // Резолвинг модулей, как в Node.js
+    "resolveJsonModule": true,                   // Поддержка импорта JSON файлов
+    "isolatedModules": true,                     // Поддержка изолированных модулей (для CRA)
+    "jsx": "react-jsx"                           // Режим JSX (используется с React 17+)
+  },
+  "include": ["src"],                          
+  "exclude": ["node_modules"]
+}
