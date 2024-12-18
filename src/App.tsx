@@ -1,32 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+
 import "./App.css";
+import { Home } from "./components/home";
+import { Navbar } from "./components/navbar";
+import { Category } from "./components/category";
+import { NotFound } from "./components/not-found";
+import { CategoryDetail } from "./components/category-detail";
 
-import { SignIn } from "./components/signIn";
-import { SignUp } from "./components/signUp";
-import { Header } from "./components/headerr";
-import { SignInFormData, SignUpFormData } from "./types";
-
-export function Forms() {
-  const onSubmit = (data: SignInFormData | SignUpFormData) => {
-    console.log("Form submitted with data:", data);
-  };
+export function App() {
   return (
     <>
-      <Router>
-        <Header />
-        <div className="container">
-          <Routes>
-            <Route
-              path="/"
-              element={<SignIn onSubmit={(data) => onSubmit(data)} />}
-            />
-            <Route
-              path="/signup"
-              element={<SignUp onSubmit={(data) => onSubmit(data)} />}
-            />
-          </Routes>
-        </div>
-      </Router>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:category" element={<Category />} />
+          <Route path="/not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/:category/:id" element={<CategoryDetail />} />
+        </Routes>
+      </div>
     </>
   );
 }
