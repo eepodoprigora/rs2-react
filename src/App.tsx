@@ -6,20 +6,47 @@ import { Navbar } from "./components/navbar";
 import { Category } from "./components/category";
 import { NotFound } from "./components/not-found";
 import { CategoryDetail } from "./components/category-detail";
+import { AuthProvider } from "./context/auth-provider";
+import { AuthStatus } from "./components/auth-status";
+import { Login } from "./components/login";
+import { PrivateRoute } from "./components/private-route";
 
 export function App() {
   return (
     <>
-      <Navbar />
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:category" element={<Category />} />
-          <Route path="/not-found" element={<NotFound />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/:category/:id" element={<CategoryDetail />} />
-        </Routes>
-      </div>
+      <AuthProvider>
+        <header className="header">
+          <Navbar />
+          <AuthStatus />
+        </header>
+
+        <div className="container">
+          <Routes>
+            <Route path="/" element={<Home />} />
+
+            <Route
+              path="/:category"
+              element={
+                <PrivateRoute>
+                  <Category />{" "}
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/:category/:id"
+              element={
+                <PrivateRoute>
+                  <CategoryDetail />{" "}
+                </PrivateRoute>
+              }
+            />
+
+            <Route path="/login" element={<Login />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </AuthProvider>
     </>
   );
 }

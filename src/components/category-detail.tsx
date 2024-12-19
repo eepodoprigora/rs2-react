@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CharactersData, EpisodeData, LocationData } from "../data/types";
+import { CharactersData, EpisodeData, LocationData } from "../types";
 import { formatDate } from "../utils";
 import characters from "../data/characters.json";
 import location from "../data/location.json";

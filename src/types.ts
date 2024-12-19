@@ -24,3 +24,9 @@ export interface LocationData {
   dimension: string;
   created: string;
 }
+
+export interface AuthContextType {
+  user: string | null;
+  signin: (newUser: string, callback: () => void) => void;
+  signout: (callback: () => void) => void;
+}

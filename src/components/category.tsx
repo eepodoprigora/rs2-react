@@ -5,7 +5,7 @@ import characters from "../data/characters.json";
 import location from "../data/location.json";
 import episode from "../data/episode.json";
 
-import { CharactersData, EpisodeData, LocationData } from "../data/types";
+import { CharactersData, EpisodeData, LocationData } from "../types";
 import { useEffect } from "react";
 
 export const Category = () => {

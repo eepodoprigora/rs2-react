@@ -1,3 +1,9 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -24,13 +30,42 @@ button:hover {
   background-color: #0056b3;
 }
 
+.auth-button {
+  background-color: #8bc0f8;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 50px;
+}
 
 .navigation {
   display: flex;
   list-style: none;
   gap: 8px;
+  padding: 0;
+  margin: 0;
 }
 
 .container {
   padding: 0 50px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #0056b3;
+  border-radius: 10px;
+
+}
+
+input {
+  min-height: 30px;
+  display: inline-block;
 }
