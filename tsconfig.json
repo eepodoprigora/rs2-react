@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,    // Учет регистра в названиях файлов
     "noEmit": true,                              // Не генерировать выходные файлы
     "esModuleInterop": true,                     // Совместимость с модулями ES
+    "allowSyntheticDefaultImports": true,
     "module": "ESNext",                          // Модульная система
     "moduleResolution": "Node",                 // Резолвинг модулей, как в Node.js
     "resolveJsonModule": true,                   // Поддержка импорта JSON файлов

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface CharactersData {
   id: number;
   name: string;
@@ -30,3 +32,15 @@ export interface AuthContextType {
   signin: (newUser: string, callback: () => void) => void;
   signout: (callback: () => void) => void;
 }
+
+export interface ErrorBoundaryProps {
+  children: ReactNode;
+}
+
+export interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+export type ApiResponse<T> = {
+  data: T[];
+};

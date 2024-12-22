@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 import { useAuth } from "../context/auth-provider";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const Login = () => {
+const Login = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
@@ -33,3 +33,5 @@ export const Login = () => {
     </form>
   );
 };
+
+export default Login;

@@ -1,15 +1,20 @@
 import { Route, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 import "./App.css";
-import { Home } from "./components/home";
 import { Navbar } from "./components/navbar";
-import { Category } from "./components/category";
-import { NotFound } from "./components/not-found";
-import { CategoryDetail } from "./components/category-detail";
+import { NotFound } from "./pages/not-found";
+
 import { AuthProvider } from "./context/auth-provider";
 import { AuthStatus } from "./components/auth-status";
-import { Login } from "./components/login";
+
 import { PrivateRoute } from "./components/private-route";
+import ErrorBoundary from "./components/error-boundary";
+
+const Home = lazy(() => import("./pages/home"));
+const Category = lazy(() => import("./pages/category"));
+const CategoryDetail = lazy(() => import("./pages/category-detail"));
+const Login = lazy(() => import("./pages/login"));
 
 export function App() {
   return (
@@ -21,30 +26,33 @@ export function App() {
         </header>
 
         <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
+          <ErrorBoundary>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/:category"
+                  element={
+                    <PrivateRoute>
+                      <Category />{" "}
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/:category/:id"
+                  element={
+                    <PrivateRoute>
+                      <CategoryDetail />{" "}
+                    </PrivateRoute>
+                  }
+                />
 
-            <Route
-              path="/:category"
-              element={
-                <PrivateRoute>
-                  <Category />{" "}
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/:category/:id"
-              element={
-                <PrivateRoute>
-                  <CategoryDetail />{" "}
-                </PrivateRoute>
-              }
-            />
-
-            <Route path="/login" element={<Login />} />
-            <Route path="/not-found" element={<NotFound />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/not-found" element={<NotFound />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
         </div>
       </AuthProvider>
     </>

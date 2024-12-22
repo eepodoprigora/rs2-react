@@ -8,7 +8,7 @@ import episode from "../data/episode.json";
 
 type selectionTypes = CharactersData | EpisodeData | LocationData | null;
 
-export const CategoryDetail = () => {
+const CategoryDetail = () => {
   const { id, category } = useParams();
   const [item, setItem] = useState<selectionTypes>(null);
   const navigate = useNavigate();
@@ -77,3 +77,5 @@ export const CategoryDetail = () => {
     </div>
   );
 };
+
+export default CategoryDetail;

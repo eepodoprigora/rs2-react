@@ -5,15 +5,12 @@ export const AuthStatus = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  console.log(auth);
-
   const handleSignout = () => {
     auth?.signout(() => {
       navigate("/");
     });
   };
 
-  // console.log(auth?.user);
   return (
     <div>
       {auth?.user && (
