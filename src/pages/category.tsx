@@ -3,12 +3,7 @@ import { useEffect, useRef } from "react";
 
 import { CharactersData, EpisodeData, LocationData } from "../types";
 import useLoadData from "../hooks/useLoadData";
-
-const CATEGORY_API_MAP: Record<string, string> = {
-  characters: "https://rickandmortyapi.com/api/character",
-  location: "https://rickandmortyapi.com/api/location",
-  episode: "https://rickandmortyapi.com/api/episode",
-};
+import { CATEGORY_API_MAP } from "../api";
 
 const CATEGORY_RU_MAP: Record<string, string> = {
   characters: "Героев",
@@ -34,7 +29,7 @@ const Category = () => {
 
   const { data, loading, error, fetchData, hasMore } = useLoadData<
     CharactersData | EpisodeData | LocationData
-  >(CATEGORY_API_MAP[category || ""]);
+  >(CATEGORY_API_MAP[category || ""], true);
 
   useEffect(() => {
     if (isCategoryValid) {
@@ -69,10 +64,12 @@ const Category = () => {
 
   const categoryRu = CATEGORY_RU_MAP[category];
 
+  const isDataArray = Array.isArray(data);
+
   return (
     <div>
       <h1>Список {categoryRu}</h1>
-      {data.length > 0 ? (
+      {isDataArray && data.length > 0 ? (
         <ul>
           {data.map((item, index) => (
             <li

@@ -1,39 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { CharactersData, EpisodeData, LocationData } from "../types";
-import { formatDate } from "../utils";
-import characters from "../data/characters.json";
-import location from "../data/location.json";
-import episode from "../data/episode.json";
 
-type selectionTypes = CharactersData | EpisodeData | LocationData | null;
+import { CATEGORY_API_MAP } from "../api";
+import { formatDate } from "../utils";
+import useLoadData from "../hooks/useLoadData";
+import { CharactersData, EpisodeData, LocationData } from "../types";
 
 const CategoryDetail = () => {
   const { id, category } = useParams();
-  const [item, setItem] = useState<selectionTypes>(null);
   const navigate = useNavigate();
 
+  const url = CATEGORY_API_MAP[category || ""] + `/${id}`;
+
+  const { data, loading, error, fetchData } = useLoadData<
+    CharactersData | EpisodeData | LocationData
+  >(url, false);
+
   useEffect(() => {
-    const dataMap: Record<string, selectionTypes[]> = {
-      characters,
-      location,
-      episode,
-    };
-
-    if (!category || !dataMap[category]) {
-      navigate("/not-found");
-      return;
-    }
-    const selectedItem = id
-      ? dataMap[category].find((item) => item?.id === +id)
-      : null;
-
-    if (!selectedItem) {
-      navigate("/not-found");
+    if (category && id) {
+      fetchData(true);
     } else {
-      setItem(selectedItem);
+      navigate("/not-found");
     }
-  }, [id, category, navigate, setItem]);
+    // eslint-disable-next-line
+  }, [category, id, navigate]);
 
   const renderCharacterDetails = (item: CharactersData) => (
     <>
@@ -62,18 +52,24 @@ const CategoryDetail = () => {
     </>
   );
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error || !data) {
+    return <p>Error: {error || "Item not found"}</p>;
+  }
+  if (!("name" in data)) {
+    return <p>Item does not have a name property</p>;
+  }
+
   return (
     <div>
-      {item && (
-        <>
-          <h2>{item.name}</h2>
-          {category === "characters" &&
-            renderCharacterDetails(item as CharactersData)}
-          {category === "episode" && renderEpisodeDetails(item as EpisodeData)}
-          {category === "location" &&
-            renderLocationDetails(item as LocationData)}
-        </>
-      )}
+      <h2>{data.name}</h2>
+      {category === "characters" &&
+        renderCharacterDetails(data as CharactersData)}
+      {category === "episode" && renderEpisodeDetails(data as EpisodeData)}
+      {category === "location" && renderLocationDetails(data as LocationData)}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 
-const useLoadData = <T,>(url: string) => {
-  const [data, setData] = useState<T[]>([]);
+const useLoadData = <T,>(url: string, isList: boolean = false) => {
+  const [data, setData] = useState<T | T[] | null>(null);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -16,27 +16,35 @@ const useLoadData = <T,>(url: string) => {
       setError(null);
 
       try {
-        const currentPage = reset ? 1 : page;
-        const response = await axios.get(url, {
-          params: { page: currentPage },
-        });
-        const newData = response.data.results || [];
-        if (reset) {
-          setData(newData);
-          setPage(2);
-        } else {
-          setData((prevData) => [...prevData, ...newData]);
-          setPage((prevPage) => prevPage + 1);
-        }
+        if (isList) {
+          const currentPage = reset ? 1 : page;
+          const response = await axios.get(url, {
+            params: { page: currentPage },
+          });
 
-        setHasMore(response.data.info?.next !== null);
+          const newData = response.data.results || [];
+          if (reset) {
+            setData(newData);
+            setPage(2);
+          } else {
+            setData((prevData) =>
+              Array.isArray(prevData) ? [...prevData, ...newData] : newData
+            );
+            setPage((prevPage) => prevPage + 1);
+          }
+
+          setHasMore(response.data.info?.next !== null);
+        } else {
+          const response = await axios.get(url);
+          setData(response.data);
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Ошибка загрузки");
       } finally {
         setLoading(false);
       }
     },
-    [url, page, hasMore, loading]
+    [url, page, hasMore, loading, isList]
   );
 
   return { data, loading, error, fetchData, hasMore };
