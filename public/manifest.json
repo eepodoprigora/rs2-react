@@ -1,0 +1,48 @@
+
+{
+    "version": "1.1.0",
+    "name": "Заметки",
+    "short_name": "Заметки",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffcc1b",
+    "orientation" : "portrait-primary",
+    "icons": [
+        {
+            "src": "/icons/16.png",
+            "type": "image/png",
+            "sizes": "16x16"
+        },
+        {
+            "src": "/icons/32.png",
+            "type": "image/png",
+            "sizes": "32x32"
+        },
+        {
+            "src": "/icons/64.png",
+            "type": "image/png",
+            "sizes": "64x64"
+        },
+        {
+            "src": "/icons/128.png",
+            "type": "image/png",
+            "sizes": "128x128"
+        },
+        {
+            "src": "/icons/256.png",
+            "type": "image/png",
+            "sizes": "256x256"
+        },
+        {
+            "src": "/icons/512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/icons/1024.png",
+            "type": "image/png",
+            "sizes": "1024x1024"
+        }
+    ]
+}
